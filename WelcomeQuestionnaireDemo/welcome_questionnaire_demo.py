@@ -15,13 +15,12 @@ dataframe = dataframe.sample(frac=1)
 dataframe = dataframe.reset_index(drop=True)
 # fill with middle value
 dataframe.fillna(3, inplace=True) 
-print(dataframe)
 dataframe.to_csv("welcome_responses_S25_cleaned.csv")
 
 # get a sense of the central tendency for the Likert scale questions
 print("Spring 2025")
 for col_name in dataframe.columns:
-    print(col_name, ":", dataframe[col_name].median())
+    print(col_name, "experience median:", dataframe[col_name].median())
 
 # create a Matplotlib figure with 5 axes all in a row
 fig, ax = plt.subplots(1, len(dataframe.columns), sharex=True, sharey=True) # one row, four columns
@@ -45,7 +44,7 @@ plt.tight_layout()
 plt.savefig("welcome_likert_hist.png")
 
 # test if there is there significantly different command line experience than github experience in the class?
-print("Command line vs Github experience t-test:", stats.ttest_rel(dataframe["CLI"], dataframe["Git"]))
+print("Command line vs Github experience t-test:", stats.ttest_rel(dataframe["Command line"], dataframe["Github"]))
 
 # test if there is a significant difference between skill levels this semester compared to last semester
 print()
@@ -56,9 +55,9 @@ print("Python experience median:", dataframe_last_sem["Answer 2"].median()) # py
 print("Command line experience median:", dataframe_last_sem["Answer 3"].median()) # command line experience
 print("Github experience median:", dataframe_last_sem["Answer 4"].median()) # github experience
 
-print("Programming experience t-test:", stats.ttest_ind(dataframe["ProgLang-woAI"], dataframe_last_sem["Answer 1"]))
+print("Programming experience t-test:", stats.ttest_ind(dataframe["Programming (w/o/AI)"], dataframe_last_sem["Answer 1"]))
 print("Python experience t-test:", stats.ttest_ind(dataframe["Python"], dataframe_last_sem["Answer 2"]))
-print("Command line experience t-test:", stats.ttest_ind(dataframe["CLI"], dataframe_last_sem["Answer 3"]))
-print("Github experience t-test:", stats.ttest_ind(dataframe["Git"], dataframe_last_sem["Answer 4"]))
+print("Command line experience t-test:", stats.ttest_ind(dataframe["Command line"], dataframe_last_sem["Answer 3"]))
+print("Github experience t-test:", stats.ttest_ind(dataframe["Github"], dataframe_last_sem["Answer 4"]))
 
 
