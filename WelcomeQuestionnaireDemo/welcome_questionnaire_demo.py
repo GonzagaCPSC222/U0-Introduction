@@ -25,18 +25,16 @@ for col_name in dataframe.columns:
 # create a Matplotlib figure with 5 axes all in a row
 fig, ax = plt.subplots(1, len(dataframe.columns), sharex=True, sharey=True) # one row, four columns
 fig.suptitle("CPSC 222 Welcome Questionnaire Likert Data (N=%d)" %(len(dataframe)))
-ax[0].set_xticks([1.5, 2.5, 3.5, 4.5, 5.5])
-ax[0].set_xticklabels(["1", "2", "3", "4", "5"])
-ax[0].set_xlim([1, 5])
 ax[0].set_ylabel("Student Count")
-
 # create one histogram for each question
 colors = ["blue", "orange", "green", "red", "purple"]
 for i in range(len(dataframe.columns)):
     col_name = dataframe.columns[i]
-    ax[i].hist(dataframe[col_name], bins=[1, 2, 3, 4, 5, 6], edgecolor="black", facecolor=colors[i])
+    values_ser = dataframe[col_name].value_counts().sort_index()
+    ax[i].bar(values_ser.index, values_ser, edgecolor="black", facecolor=colors[i])
     ax[i].set_title(col_name)
     ax[i].set_xlabel("Likert Response")
+    ax[i].set_xlim([0.5, 5.5])
 
 # set the figure to be nice and wide
 fig.set_size_inches(12, 3.5)
